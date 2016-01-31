@@ -9,7 +9,7 @@
  * Author URI:        (#plugin_author_url#)
  * License:           MIT
  * License URI:       https://opensource.org/licenses/MIT
- * Text Domain:       @sh{#plugin_slug#}
+ * Text Domain:       (#plugin_slug#)
  * Domain Path:       /languages
  */
 
