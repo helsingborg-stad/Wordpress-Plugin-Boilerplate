@@ -4,6 +4,8 @@
 rm README.md
 mv ./README_template.md README.md
 
+echo "\033[35mWordPress Plugin Boilerplate setup. Please follow the steps in this setup guide to properly setup your new WordPress Plugin Boilerplate.\033[0m"
+
 echo "\033[34m\033[1mEnter the name of your plugin (readable):\033[0m "
 read plugin_name
 find ./ -type f ! -name "Init.sh" -exec sed -i '' -e "s/(#plugin_name#)/$plugin_name/g" {} >/dev/null 2>&1 \;
@@ -48,4 +50,4 @@ npm install
 rm Init.sh
 find . -maxdepth 1 -name '*.DS_Store' -delete
 
-echo "\033[34m\033[1mAll done!\033[0m"
+echo "\033[92m\033[1mAll done!\033[0m"
