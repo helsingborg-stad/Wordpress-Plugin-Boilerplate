@@ -13,6 +13,25 @@
  * Domain Path:       /languages
  */
 
+ // Protect agains direct file access
 if (! defined('WPINC')) {
     die;
 }
+
+define('(#plugin_cap#)_PATH', plugin_dir_path(__FILE__));
+define('(#plugin_cap#)_URL', plugins_url('', __FILE__));
+define('(#plugin_cap#)_TEMPLATE_PATH', (#plugin_cap#)_PATH . 'templates/');
+
+load_plugin_textdomain('modularity', false, plugin_basename(dirname(__FILE__)) . '/languages');
+
+require_once (#plugin_cap#)_PATH . 'source/php/Vendor/Psr4ClassLoader.php';
+require_once (#plugin_cap#) . 'Public.php';
+
+// Instantiate and register the autoloader
+$loader = new (#plugin_namespace#)\Vendor\Psr4ClassLoader();
+$loader->addPrefix('(#plugin_namespace#)', (#plugin_cap#)_PATH);
+$loader->addPrefix('(#plugin_namespace#)', (#plugin_cap#)_PATH . 'source/php/');
+$loader->register();
+
+// Start application
+new (#plugin_namespace#)\App();
