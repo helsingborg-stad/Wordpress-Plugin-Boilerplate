@@ -10,7 +10,7 @@
     "type": "git",
     "url": "https://github.com/Svanmark/Wordpress-Plugin-Boilerplate.git"
   },
-  "author": "Kristoffer Svanmark",
+  "author": "(#plugin_author#)",
   "license": "MIT",
   "bugs": {
     "url": "https://github.com/Svanmark/Wordpress-Plugin-Boilerplate/issues"

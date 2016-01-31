@@ -1,6 +1,9 @@
 #!/bin/bash
 # Script to change plugin name occurances
 
+rm README.md
+mv ./README_template.md README.md
+
 echo "\033[34m\033[1mEnter the name of your plugin (readable):\033[0m "
 read plugin_name
 find ./ -type f ! -name "Init.sh" -exec sed -i '' -e "s/(#plugin_name#)/$plugin_name/g" {} >/dev/null 2>&1 \;
@@ -37,9 +40,6 @@ find ./ -type f ! -name "Init.sh" -exec sed -i '' -e "s/(#plugin_author_url#)/$p
 mv ./plugin-name.php ${plugin_slug}.php
 mv ./source/js/plugin-name.js ./source/js/${plugin_slug}.js
 mv ./source/sass/plugin-name.scss ./source/sass/${plugin_slug}.scss
-
-rm README.md
-mv ./README_template.md README.md
 
 echo "\033[34m\033[1mLean back while I install required node modules for you…\033[0m"
 npm install
