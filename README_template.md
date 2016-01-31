@@ -1,1 +1,1 @@
-# @sh{#plugin_name#}
+# (#plugin_name#)
