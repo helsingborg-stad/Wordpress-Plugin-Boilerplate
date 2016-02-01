@@ -47,7 +47,7 @@ echo "\033[34m\033[1mLean back while I install required node modules for you…\
 npm install
 
 # Clean up
-rm Init.sh
+rm setup.sh
 find . -maxdepth 1 -name '*.DS_Store' -delete
 
 echo "\033[92m\033[1mAll done!\033[0m"
