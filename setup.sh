@@ -16,7 +16,7 @@ find ./ -type f ! -name "Init.sh" -exec sed -i '' -e "s/(#plugin_description#)/$
 
 echo "\033[34m\033[1mEnter plugin url:\033[0m "
 read plugin_url
-find ./ -type f ! -name "Init.sh" -exec sed -i '' -e "s/(#plugin_url#)/$plugin_url/g" {} >/dev/null 2>&1 \;
+find ./ -type f ! -name "Init.sh" -exec sed -i '' -e "s:(#plugin_url#):$plugin_url:g" {} >/dev/null 2>&1 \;
 
 echo "\033[34m\033[1mEnter plugin slug:\033[0m "
 read plugin_slug
@@ -36,7 +36,7 @@ find ./ -type f ! -name "Init.sh" -exec sed -i '' -e "s/(#plugin_author#)/$plugi
 
 echo "\033[34m\033[1mEnter plugin author url:\033[0m "
 read plugin_author_url
-find ./ -type f ! -name "Init.sh" -exec sed -i '' -e "s/(#plugin_author_url#)/$plugin_author_url/g" {} >/dev/null 2>&1 \;
+find ./ -type f ! -name "Init.sh" -exec sed -i '' -e "s:(#plugin_author_url#):$plugin_author_url:g" {} >/dev/null 2>&1 \;
 
 # Rename plugin-name.* to plugin_slug
 mv ./plugin-name.php ${plugin_slug}.php
