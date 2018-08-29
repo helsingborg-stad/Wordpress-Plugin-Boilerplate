@@ -1,53 +1,122 @@
-// Include gulp
-var gulp = require('gulp');
+//
+//  GULPFILE.JS
+//  Author: Nikolas Ramstedt (nikolas.ramstedt@helsingborg.se)
+//
+//  Commands:
+//  "gulp"          -   Build and watch task combined
+//  "gulp build"    -   Build assets
+//  "gulp watch"    -   Watch for file changes and build changed files
+//
 
-// Include Our Plugins
-var sass = require('gulp-sass');
-var concat = require('gulp-concat');
-var uglify = require('gulp-uglify');
-var cssnano = require('gulp-cssnano');
-var rename = require('gulp-rename');
-var autoprefixer = require('gulp-autoprefixer');
-var plumber = require('gulp-plumber');
+const gulp          = require('gulp');
+const sass          = require('gulp-sass');
+const concat        = require('gulp-concat');
+const uglify        = require('gulp-uglify');
+const cleanCSS      = require('gulp-clean-css');
+const rename        = require('gulp-rename');
+const autoprefixer  = require('gulp-autoprefixer');
+const plumber       = require('gulp-plumber');
+const rev           = require('gulp-rev');
+const revDel        = require('rev-del');
+const runSequence   = require('run-sequence');
+const jshint        = require('gulp-jshint');
+const sourcemaps    = require('gulp-sourcemaps');
+const notifier      = require('node-notifier');
 
-// Compile Our Sass
-gulp.task('sass-dist', function() {
-    gulp.src('source/sass/(#plugin_slug#).scss')
-            .pipe(plumber())
-            .pipe(sass())
-            .pipe(autoprefixer('last 2 version', 'safari 5', 'ie 8', 'ie 9', 'opera 12.1'))
-            .pipe(rename({suffix: '.min'}))
-            .pipe(cssnano())
-            .pipe(gulp.dest('dist/css'));
+
+// ==========================================================================
+// Default Task
+// ==========================================================================
+
+gulp.task('default', function(callback) {
+    runSequence('build', 'watch', callback);
 });
 
-gulp.task('sass-dev', function() {
-    gulp.src('source/sass/(#plugin_slug#).scss')
+// ==========================================================================
+// Build Tasks
+// ==========================================================================
+
+gulp.task('build', function(callback) {
+    runSequence(['sass', 'scripts'], 'revision', callback);
+});
+
+gulp.task('build:sass', function(callback) {
+    runSequence('sass', 'revision', callback);
+});
+
+gulp.task('build:scripts', function(callback) {
+    runSequence('scripts', 'revision', callback);
+});
+
+// ==========================================================================
+// Watch Task
+// ==========================================================================
+gulp.task('watch', function() {
+    gulp.watch('source/js/**/*.js', ['build:scripts']);
+    gulp.watch('source/sass/**/*.scss', ['build:sass']);
+});
+
+// ==========================================================================
+// SASS Task
+// ==========================================================================
+gulp.task('sass', function() {
+    return gulp.src('source/sass/(#plugin_slug#).scss')
         .pipe(plumber())
-        .pipe(sass())
+        .pipe(sourcemaps.init())
+        .pipe(sass().on('error', function(err) {
+            console.log(err.message);
+            notifier.notify({
+              'title': 'SASS Compile Error',
+              'message': err.message
+            });
+        }))
         .pipe(autoprefixer('last 2 version', 'safari 5', 'ie 8', 'ie 9', 'opera 12.1'))
+        .pipe(sourcemaps.write())
         .pipe(rename({suffix: '.dev'}))
-        .pipe(gulp.dest('dist/css'));
+        .pipe(gulp.dest('dist/css'))
+        .pipe(rename('(#plugin_slug#).min.css'))
+        .pipe(cleanCSS({debug: true}))
+        .pipe(gulp.dest('dist/css'))
+        .pipe(gulp.dest('dist/.tmp/css'));
 });
 
-// Concatenate & Minify JS
-gulp.task('scripts-dist', function() {
-    gulp.src([
+// ==========================================================================
+// Scripts Task
+// ==========================================================================
+gulp.task('scripts', function() {
+    return gulp.src([
             'source/js/**/*.js',
         ])
+        .pipe(plumber())
+        .pipe(sourcemaps.init())
+        .pipe(jshint())
+        .pipe(jshint.reporter('fail').on('error', function(err) {
+            this.pipe(jshint.reporter('default'));
+            notifier.notify({
+              'title': 'JS Compile Error',
+              'message': err.message
+            });
+        }))
         .pipe(concat('(#plugin_slug#).dev.js'))
+        .pipe(sourcemaps.write())
         .pipe(gulp.dest('dist/js'))
         .pipe(rename('(#plugin_slug#).min.js'))
-        .pipe(uglify())
-        .pipe(gulp.dest('dist/js'));
+        .pipe(uglify().on('error', function(err) {
+            return;
+        }))
+        .pipe(gulp.dest('dist/js'))
+        .pipe(gulp.dest('dist/.tmp/js'));
 });
 
-// Watch Files For Changes
-gulp.task('watch', function() {
-    gulp.watch('source/js/**/*.js', ['scripts-dist']);
-    gulp.watch('source/sass/**/*.scss', ['sass-dist', 'sass-dev']);
+// ==========================================================================
+// Revision Task
+// ==========================================================================
+
+gulp.task("revision", function(){
+    return gulp.src(["./dist/.tmp/**/*"])
+      .pipe(rev())
+      .pipe(gulp.dest('./dist'))
+      .pipe(rev.manifest('rev-manifest.json', {merge: true}))
+      .pipe(revDel({ dest: './dist' }))
+      .pipe(gulp.dest('./dist'));
 });
-
-// Default Task
-gulp.task('default', ['sass-dist', 'sass-dev', 'scripts-dist', 'watch']);
-

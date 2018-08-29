@@ -19,11 +19,18 @@
   "devDependencies": {
     "gulp": "^3.8.11",
     "gulp-autoprefixer": "^3.1.0",
+    "gulp-clean-css": "^3.10.0",
     "gulp-concat": "^2.5.2",
-    "gulp-cssnano": "^2.1.0",
+    "gulp-jshint": "^2.1.0",
     "gulp-plumber": "^1.0.1",
     "gulp-rename": "^1.2.0",
+    "gulp-rev": "^8.1.1",
     "gulp-sass": "^2.1.0",
-    "gulp-uglify": "^1.1.0"
+    "gulp-sourcemaps": "^2.6.4",
+    "gulp-uglify": "^1.1.0",
+    "jshint": "^2.9.6",
+    "node-notifier": "^5.2.1",
+    "rev-del": "^1.0.5",
+    "run-sequence": "^2.2.1"
   }
 }
