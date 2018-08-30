@@ -41,7 +41,7 @@ gulp.task('default', function(callback) {
 // ==========================================================================
 
 gulp.task('build', function(callback) {
-    runSequence(['sass', 'scripts'], 'revision', callback);
+    runSequence('clean:dist', ['sass', 'scripts'], 'revision', callback);
 });
 
 gulp.task('build:sass', function(callback) {
@@ -121,4 +121,11 @@ gulp.task("revision", function(){
       .pipe(rev.manifest('rev-manifest.json', {merge: true}))
       .pipe(revDel({ dest: './dist' }))
       .pipe(gulp.dest('./dist'));
+});
+
+// ==========================================================================
+// Clean Task
+// ==========================================================================
+gulp.task('clean:dist', function () {
+    return del.sync('dist');
 });
