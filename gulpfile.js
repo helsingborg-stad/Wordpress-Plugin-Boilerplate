@@ -10,7 +10,6 @@
 
 const gulp          = require('gulp');
 const sass          = require('gulp-sass');
-const concat        = require('gulp-concat');
 const uglify        = require('gulp-uglify');
 const cleanCSS      = require('gulp-clean-css');
 const rename        = require('gulp-rename');
@@ -19,7 +18,6 @@ const plumber       = require('gulp-plumber');
 const rev           = require('gulp-rev');
 const revDel        = require('rev-del');
 const runSequence   = require('run-sequence');
-const jshint        = require('gulp-jshint');
 const sourcemaps    = require('gulp-sourcemaps');
 const notifier      = require('node-notifier');
 
