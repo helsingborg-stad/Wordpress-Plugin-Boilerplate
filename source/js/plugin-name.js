@@ -1,1 +1,9 @@
-var (#plugin_namespace#) = {};
+'use strict';
+
+class (#plugin_namespace#) {
+    constructor()
+    {
+    }
+}
+
+new (#plugin_namespace#)();
