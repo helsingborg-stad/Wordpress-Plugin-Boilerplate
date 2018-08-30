@@ -16,7 +16,7 @@ class App
      */
     public function enqueueStyles()
     {
-        wp_register_style('cache-bust-plugin-css', (#plugin_cap#)_PATH . 'dist/' . \(#plugin_namespace#)\Helper\CacheBust::name('css/(#plugin_slug#).css'));
+        wp_register_style('cache-bust-plugin-css', (#plugin_cap#)_URL . '/dist/' . \(#plugin_namespace#)\Helper\CacheBust::name('css/(#plugin_slug#).css'));
     }
 
     /**
@@ -25,6 +25,6 @@ class App
      */
     public function enqueueScripts()
     {
-        wp_register_script('cache-bust-plugin-js', (#plugin_cap#)_PATH . 'dist/' . \(#plugin_namespace#)\Helper\CacheBust::name('js/(#plugin_slug#).js'));
+        wp_register_script('cache-bust-plugin-js', (#plugin_cap#)_URL . '/dist/' . \(#plugin_namespace#)\Helper\CacheBust::name('js/(#plugin_slug#).js'));
     }
 }
