@@ -23,6 +23,12 @@ const jshint        = require('gulp-jshint');
 const sourcemaps    = require('gulp-sourcemaps');
 const notifier      = require('node-notifier');
 
+//Dependecies required to compile ES5+ Scripts
+const browserify = require('browserify');
+const source = require('vinyl-source-stream');
+const buffer = require('vinyl-buffer');
+const babelify = require('babelify');
+const eslint = require('gulp-eslint');
 
 // ==========================================================================
 // Default Task
@@ -84,26 +90,30 @@ gulp.task('sass', function() {
 // Scripts Task
 // ==========================================================================
 gulp.task('scripts', function() {
-    return gulp.src([
-            'source/js/**/*.js',
-        ])
-        .pipe(plumber())
-        .pipe(sourcemaps.init())
-        .pipe(jshint())
-        .pipe(jshint.reporter('fail').on('error', function(err) {
-            this.pipe(jshint.reporter('default'));
+    return browserify('source/js/(#plugin_slug#).js')
+        .transform('babelify',{
+            presets : ["es2015"]
+        })
+        .bundle()
+        .on('error', function(err){
+            console.log(err.stack);
+
             notifier.notify({
-              'title': 'JS Compile Error',
+              'title': 'Compile Error',
               'message': err.message
             });
-        }))
-        .pipe(concat('(#plugin_slug#).dev.js'))
+
+            this.emit("end");
+        })
+        .pipe(source('(#plugin_slug#).js')) // Converts To Vinyl Stream
+        .pipe(buffer()) // Converts Vinyl Stream To Vinyl Buffer
+        // Gulp Plugins Here!
+        .pipe(sourcemaps.init())
+        .pipe(rename('(#plugin_slug#).dev.js'))
         .pipe(sourcemaps.write())
         .pipe(gulp.dest('dist/js'))
         .pipe(rename('(#plugin_slug#).min.js'))
-        .pipe(uglify().on('error', function(err) {
-            return;
-        }))
+        .pipe(uglify())
         .pipe(gulp.dest('dist/js'))
         .pipe(gulp.dest('dist/.tmp/js'));
 });
