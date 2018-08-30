@@ -76,11 +76,8 @@ gulp.task('sass', function() {
         }))
         .pipe(autoprefixer('last 2 version', 'safari 5', 'ie 8', 'ie 9', 'opera 12.1'))
         .pipe(sourcemaps.write())
-        .pipe(rename({suffix: '.dev'}))
         .pipe(gulp.dest('dist/css'))
-        .pipe(rename('(#plugin_slug#).min.css'))
         .pipe(cleanCSS({debug: true}))
-        .pipe(gulp.dest('dist/css'))
         .pipe(gulp.dest('dist/.tmp/css'));
 });
 
@@ -107,12 +104,9 @@ gulp.task('scripts', function() {
         .pipe(buffer()) // Converts Vinyl Stream To Vinyl Buffer
         // Gulp Plugins Here!
         .pipe(sourcemaps.init())
-        .pipe(rename('(#plugin_slug#).dev.js'))
         .pipe(sourcemaps.write())
         .pipe(gulp.dest('dist/js'))
-        .pipe(rename('(#plugin_slug#).min.js'))
         .pipe(uglify())
-        .pipe(gulp.dest('dist/js'))
         .pipe(gulp.dest('dist/.tmp/js'));
 });
 
