@@ -94,7 +94,7 @@ gulp.task('scripts', function() {
               'message': err.message
             });
         }))
-        .pipe(concat('(#plugin_slug#).dev.js'))
+        .pipe(concat('(#plugin_slug#).js'))
         .pipe(sourcemaps.write())
         .pipe(gulp.dest('dist/js'))
         .pipe(uglify().on('error', function(err) {
