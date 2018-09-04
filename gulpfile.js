@@ -20,6 +20,7 @@ const revDel        = require('rev-del');
 const runSequence   = require('run-sequence');
 const sourcemaps    = require('gulp-sourcemaps');
 const notifier      = require('node-notifier');
+const del           = require('del');
 
 //Dependecies required to compile ES5+ Scripts
 const browserify = require('browserify');
