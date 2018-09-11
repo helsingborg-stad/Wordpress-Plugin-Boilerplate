@@ -1,5 +1,5 @@
 //
-//  GULPFILE.JS
+//  GULPFILE.JS - Reactified
 //  Author: Nikolas Ramstedt (nikolas.ramstedt@helsingborg.se)
 //
 //  Commands:
@@ -20,13 +20,16 @@ const revDel        = require('rev-del');
 const runSequence   = require('run-sequence');
 const sourcemaps    = require('gulp-sourcemaps');
 const notifier      = require('node-notifier');
+const del           = require('del');
+const eslint        = require('gulp-eslint');
+const streamify     = require('gulp-streamify');
 
-//Dependecies required to compile ES5+ Scripts
+//Dependecies required to compile ES6 Scripts
 const browserify = require('browserify');
 const source = require('vinyl-source-stream');
+const reactify = require('reactify');
 const buffer = require('vinyl-buffer');
-const babelify = require('babelify');
-const eslint = require('gulp-eslint');
+const babelify = require("babelify");
 
 // ==========================================================================
 // Default Task
@@ -57,8 +60,10 @@ gulp.task('build:scripts', function(callback) {
 // ==========================================================================
 gulp.task('watch', function() {
     gulp.watch('source/js/**/*.js', ['build:scripts']);
+    gulp.watch('source/js/**/*.jsx', ['build:scripts']);
     gulp.watch('source/sass/**/*.scss', ['build:sass']);
 });
+
 
 // ==========================================================================
 // SASS Task
@@ -85,10 +90,11 @@ gulp.task('sass', function() {
 // Scripts Task
 // ==========================================================================
 gulp.task('scripts', function() {
-    return browserify('source/js/(#plugin_slug#).js')
-        .transform('babelify',{
-            presets : ["es2015"]
+    return browserify({
+            entries: ['source/js/(#plugin_slug#).js'],
+            debug: true
         })
+        .transform(reactify, {"es6": true})
         .bundle()
         .on('error', function(err){
             console.log(err.stack);
@@ -109,6 +115,7 @@ gulp.task('scripts', function() {
         .pipe(uglify())
         .pipe(gulp.dest('dist/.tmp/js'));
 });
+
 
 // ==========================================================================
 // Revision Task
