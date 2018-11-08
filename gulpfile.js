@@ -25,11 +25,12 @@ const eslint        = require('gulp-eslint');
 const streamify     = require('gulp-streamify');
 
 //Dependecies required to compile ES6 Scripts
-const browserify = require('browserify');
-const source = require('vinyl-source-stream');
-const reactify = require('reactify');
-const buffer = require('vinyl-buffer');
-const babelify = require("babelify");
+const browserify    = require('browserify');
+const reactify      = require('reactify');
+const source        = require('vinyl-source-stream');
+const buffer        = require('vinyl-buffer');
+const babelify      = require("babelify");
+const es            = require('event-stream');
 
 // ==========================================================================
 // Default Task
@@ -90,32 +91,40 @@ gulp.task('sass', function() {
 // Scripts Task
 // ==========================================================================
 gulp.task('scripts', function() {
-    return browserify({
-            entries: ['source/js/(#plugin_slug#).js'],
-            debug: true
-        })
-        .transform(reactify, {"es6": true})
-        .bundle()
-        .on('error', function(err){
-            console.log(err.stack);
+    var filePath = 'source/js/';
+    var files = [
+        '(#plugin_slug#).js'
+    ];
 
-            notifier.notify({
-              'title': 'Compile Error',
-              'message': err.message
-            });
+    var tasks = files.map(function(entry) {
+        return browserify({
+                entries: [filePath + entry],
+                debug: true
+            })
+            .transform([babelify])
+            .bundle()
+            .on('error', function(err){
+                console.log(err.message);
 
-            this.emit("end");
-        })
-        .pipe(source('(#plugin_slug#).js')) // Converts To Vinyl Stream
-        .pipe(buffer()) // Converts Vinyl Stream To Vinyl Buffer
-        // Gulp Plugins Here!
-        .pipe(sourcemaps.init())
-        .pipe(sourcemaps.write())
-        .pipe(gulp.dest('dist/js'))
-        .pipe(uglify())
-        .pipe(gulp.dest('dist/.tmp/js'));
+                notifier.notify({
+                  'title': 'Compile Error',
+                  'message': err.message
+                });
+
+                this.emit("end");
+            })
+            .pipe(source(entry)) // Converts To Vinyl Stream
+            .pipe(buffer()) // Converts Vinyl Stream To Vinyl Buffer
+            // Gulp Plugins Here!
+            .pipe(sourcemaps.init())
+            .pipe(sourcemaps.write())
+            .pipe(gulp.dest('dist/js'))
+            .pipe(uglify())
+            .pipe(gulp.dest('dist/.tmp/js'));
+    });
+
+    return es.merge.apply(null, tasks);
 });
-
 
 // ==========================================================================
 // Revision Task
