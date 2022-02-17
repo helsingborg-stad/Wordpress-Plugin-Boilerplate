@@ -1,15 +1,15 @@
 <?php
 
 /**
- * Plugin Name:       (#plugin_name#)
- * Plugin URI:        (#plugin_url#)
+ * Plugin Name:       {{BPREPLACENAME}}
+ * Plugin URI:        https://github.com/{{BPREPLACEGITHUB}}/{{BPREPLACESLUG}}
  * Description:       {{BPREPLACEDESCRIPTION}}
  * Version:           1.0.0
- * Author:            (#plugin_author#)
- * Author URI:        (#plugin_author_url#)
+ * Author:            {{BPREPLACEAUTHOR}}
+ * Author URI:        https://github.com/{{BPREPLACEGITHUB}}
  * License:           MIT
  * License URI:       https://opensource.org/licenses/MIT
- * Text Domain:       {{BPREPLACESLUG}}
+ * Text Domain:       mod-{{BPREPLACESLUG}}
  * Domain Path:       /languages
  */
 
@@ -32,6 +32,15 @@ $loader = new {{BPREPLACENAMESPACE}}\Vendor\Psr4ClassLoader();
 $loader->addPrefix('{{BPREPLACENAMESPACE}}', {{BPREPLACECAPSCONSTANT}}_PATH);
 $loader->addPrefix('{{BPREPLACENAMESPACE}}', {{BPREPLACECAPSCONSTANT}}_PATH . 'source/php/');
 $loader->register();
+
+// Acf auto import and export
+$acfExportManager = new \AcfExportManager\AcfExportManager();
+$acfExportManager->setTextdomain('{{BPREPLACESLUG}}');
+$acfExportManager->setExportFolder({{BPREPLACECAPSCONSTANT}}_PATH . 'source/php/AcfFields/');
+$acfExportManager->autoExport(array(
+    '{{BPREPLACESLUG}}-settings' => 'group_61ea7a87e8aaa' //Update with acf id here, settings view
+));
+$acfExportManager->import();
 
 // Start application
 new {{BPREPLACENAMESPACE}}\App();
