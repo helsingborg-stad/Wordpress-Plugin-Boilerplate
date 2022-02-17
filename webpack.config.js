@@ -16,8 +16,8 @@ module.exports = {
      * Entry files - Add more entries if needed.
      */
     entry: {
-        'js/(#plugin_slug#)': './source/js/(#plugin_slug#).js',
-        'css/(#plugin_slug#)': './source/sass/(#plugin_slug#).scss',
+        'js/{{BPREPLACESLUG}}': './source/js/{{BPREPLACESLUG}}.js',
+        'css/{{BPREPLACESLUG}}': './source/sass/{{BPREPLACESLUG}}.scss',
     },
     
     /**
