@@ -1,0 +1,20 @@
+{
+    "name": "{{BPREPLACEGITHUB}}/{{BPREPLACESLUG}}",
+    "description": "{{BPREPLACEDESCRIPTION}}",
+    "type": "wordpress-plugin",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "{{BPREPLACEAUTHOR}}",
+            "email": "{{BPREPLACEAUTHOREMAIL}}"
+        }
+    ],
+    "minimum-stability": "stable",
+    "require": {},
+    "repositories": [
+        {
+            "type": "vcs",
+            "url": "https://github.com/{{BPREPLACEGITHUB}}/{{BPREPLACESLUG}}.git"
+        }
+    ]
+}
