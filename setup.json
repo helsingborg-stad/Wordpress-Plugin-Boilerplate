@@ -1,0 +1,11 @@
+{
+  "name": "WordPress Plugin Boilerplate",
+  "description": "A boilerplate repo for WordPress plugins.",
+  "slug": "boilerplate",
+  "slugcamelcase": "Boilerplate",
+  "namespace": "WordPressPluginBoilerplate",
+  "capsConstant": "WP_PLUGIN_BOILERPLATE",
+  "author": "Firstname Lastname @ Company",
+  "authoremail": "firstname.lastname@company.com",
+  "github": "githubname"
+}
