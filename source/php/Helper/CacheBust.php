@@ -1,6 +1,6 @@
 <?php
 
-namespace (#plugin_namespace#)\Helper;
+namespace {{BPREPLACENAMESPACE}}\Helper;
 
 class CacheBust
 {
@@ -31,7 +31,7 @@ class CacheBust
      */
     public static function getRevManifest()
     {
-        $jsonPath = {{BPREPLACECAPSCONSTANT}}_PATH . apply_filters('(#plugin_namespace#)/Helper/CacheBust/RevManifestPath', 'dist/rev-manifest.json');
+        $jsonPath = {{BPREPLACECAPSCONSTANT}}_PATH . apply_filters('{{BPREPLACENAMESPACE}}/Helper/CacheBust/RevManifestPath', 'dist/rev-manifest.json');
 
         if (file_exists($jsonPath)) {
             return json_decode(file_get_contents($jsonPath), true);

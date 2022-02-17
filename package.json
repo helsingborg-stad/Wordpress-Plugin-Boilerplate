@@ -12,7 +12,7 @@
     "type": "git",
     "url": "git@github.com:helsingborg-stad/Wordpress-Plugin-Boilerplate.git"
   },
-  "author": "(#plugin_author#)",
+  "author": "{{BPREPLACEAUTHOR}}",
   "license": "MIT",
   "bugs": {
     "url": "https://github.com/helsingborg-stad/Wordpress-Plugin-Boilerplate/issues"

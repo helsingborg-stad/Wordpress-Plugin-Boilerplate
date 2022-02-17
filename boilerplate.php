@@ -28,10 +28,10 @@ require_once {{BPREPLACECAPSCONSTANT}}_PATH . 'source/php/Vendor/Psr4ClassLoader
 require_once {{BPREPLACECAPSCONSTANT}}_PATH . 'Public.php';
 
 // Instantiate and register the autoloader
-$loader = new (#plugin_namespace#)\Vendor\Psr4ClassLoader();
-$loader->addPrefix('(#plugin_namespace#)', {{BPREPLACECAPSCONSTANT}}_PATH);
-$loader->addPrefix('(#plugin_namespace#)', {{BPREPLACECAPSCONSTANT}}_PATH . 'source/php/');
+$loader = new {{BPREPLACENAMESPACE}}\Vendor\Psr4ClassLoader();
+$loader->addPrefix('{{BPREPLACENAMESPACE}}', {{BPREPLACECAPSCONSTANT}}_PATH);
+$loader->addPrefix('{{BPREPLACENAMESPACE}}', {{BPREPLACECAPSCONSTANT}}_PATH . 'source/php/');
 $loader->register();
 
 // Start application
-new (#plugin_namespace#)\App();
+new {{BPREPLACENAMESPACE}}\App();
