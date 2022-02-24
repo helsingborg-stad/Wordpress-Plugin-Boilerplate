@@ -8,6 +8,8 @@ class App
     {
         add_action('admin_enqueue_scripts', array($this, 'enqueueStyles'));
         add_action('admin_enqueue_scripts', array($this, 'enqueueScripts'));
+
+        $this->cacheBust = new \{{BPREPLACENAMESPACE}}\Helper\CacheBust();
     }
 
     /**
@@ -19,8 +21,10 @@ class App
         wp_register_style(
             '{{BPREPLACESLUG}}-css',
             {{BPREPLACECAPSCONSTANT}}_URL . '/dist/' .
-            \{{BPREPLACENAMESPACE}}\Helper\CacheBust::name('css/{{BPREPLACESLUG}}.css')
+            $this->cacheBust->name('css/{{BPREPLACESLUG}}.css')
         );
+
+        wp_enqueue_style('{{BPREPLACESLUG}}-css');
     }
 
     /**
@@ -32,7 +36,9 @@ class App
         wp_register_script(
             '{{BPREPLACESLUG}}-js',
             {{BPREPLACECAPSCONSTANT}}_URL . '/dist/' .
-            \{{BPREPLACENAMESPACE}}\Helper\CacheBust::name('js/{{BPREPLACESLUG}}.js')
+            $this->cacheBust->name('js/{{BPREPLACESLUG}}.js')
         );
+
+        wp_enqueue_script('{{BPREPLACESLUG}}-js');
     }
 }
