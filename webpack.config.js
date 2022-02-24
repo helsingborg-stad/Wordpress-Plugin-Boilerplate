@@ -1,19 +1,19 @@
 const path = require('path');
-const autoprefixer = require('autoprefixer');
-const CleanWebpackPlugin = require('clean-webpack-plugin');
+const { WebpackManifestPlugin } = require('webpack-manifest-plugin');
+const WebpackNotifierPlugin = require('webpack-notifier');
+const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
-const FixStyleOnlyEntriesPlugin = require("webpack-fix-style-only-entries");
-const ManifestPlugin = require('webpack-manifest-plugin');
-
-const devMode = process.env.NODE_ENV !== 'production';
+const RemoveEmptyScripts = require('webpack-remove-empty-scripts');
+const CssMinimizerWebpackPlugin = require('css-minimizer-webpack-plugin');
+const autoprefixer = require('autoprefixer');
+const { getIfUtils, removeEmpty } = require('webpack-config-utils');
+const { ifProduction } = getIfUtils(process.env.NODE_ENV);
 
 module.exports = {
-    externals: {
-        jquery: 'jQuery'
-    },
+    mode: ifProduction('production', 'development'),
 
     /**
-     * Entry files - Add more entries if needed.
+     * Add your entry files here
      */
     entry: {
         'js/{{BPREPLACESLUG}}': './source/js/{{BPREPLACESLUG}}.js',
@@ -21,40 +21,22 @@ module.exports = {
     },
     
     /**
-     * Output files
+     * Output settings
      */
     output: {
-        filename: devMode ? '[name].js' : '[name].[contenthash:8].js',
-        chunkFilename: devMode ? '[id].js' : '[id].[contenthash:8].js',
-        path: path.resolve(process.cwd(), 'dist'),
+        filename: '[name].[contenthash].js',
+        path: path.resolve(__dirname, 'dist'),
+        publicPath: '',
     },
-
+    /**
+     * Define external dependencies here
+     */
+    externals: {
+    },
     module: {
         rules: [
-
             /**
-             * Babel
-             */
-            {
-                test: /\.jsx?/,
-                exclude: /(node_modules|bower_components)/,
-                use: {
-                    loader: 'babel-loader',
-                    options: {
-                        // Babel config here
-                        presets: ['@babel/preset-env', '@babel/preset-react'],
-                        plugins: [
-                            '@babel/plugin-syntax-dynamic-import',
-                            '@babel/plugin-proposal-export-default-from',
-                            '@babel/plugin-proposal-class-properties',
-                            'react-hot-loader/babel',
-                        ],
-                    },
-                },
-            },
-
-            /**
-             * Compile sass to css
+             * Styles
              */
             {
                 test: /\.(sa|sc|c)ss$/,
@@ -63,65 +45,49 @@ module.exports = {
                     {
                         loader: 'css-loader',
                         options: {
-                            importLoaders: 2, // 0 => no loaders (default); 1 => postcss-loader; 2 => sass-loader
+                            importLoaders: 3, // 0 => no loaders (default); 1 => postcss-loader; 2 => sass-loader
                         },
                     },
                     {
                         loader: 'postcss-loader',
                         options: {
-                            plugins: [autoprefixer],
-                        },
+                            postcssOptions: {
+                                plugins: [ autoprefixer ],
+                            }
+                        }
                     },
-                    'sass-loader',
+                    {
+                        loader: 'sass-loader',
+                        options: {}
+                    },
+                    'import-glob-loader'
                 ],
             },
-
-            /**
-             * Images
-             */
-            {
-                test: /\.(png|svg|jpg|gif)$/,
-                use: [
-                    {
-                        loader: 'file-loader',
-                        options: {
-                            name: devMode ? '[name].[ext]' : '[name].[contenthash:8].[ext]',
-                        },
-                    },
-                ],
-            },
-            /**
-             * Fonts
-             */
-            {
-                test: /\.(png|svg|jpg|gif)$/,
-                use: [
-                    {
-                        loader: 'file-loader',
-                        options: {
-                            name: devMode ? '[name].[ext]' : '[name].[contenthash:8].[ext]',
-                        },
-                    },
-                ],
-            }
-        ]
+        ],
     },
+    plugins: removeEmpty([
+        /**
+         * Fix CSS entry chunks generating js file
+         */
+         new RemoveEmptyScripts(),
 
-    /**
-     * Plugins
-     */
-    plugins: [
+        /**
+         * Clean dist folder
+         */
         new CleanWebpackPlugin(),
-        new FixStyleOnlyEntriesPlugin(),
-        // Minify css and create css file
+        /**
+         * Output CSS files
+         */
         new MiniCssExtractPlugin({
-            filename: devMode ? '[name].css' : '[name].[contenthash:8].css',
-            chunkFilename: devMode ? '[name].css' : '[name].[contenthash:8].css'
+            filename: '[name].[contenthash].css'
         }),
-        new ManifestPlugin({
-            fileName: 'rev-manifest.json',
+
+        /**
+         * Output manifest.json for cache busting
+         */
+        new WebpackManifestPlugin({
             // Filter manifest items
-            filter: function(file) {
+            filter: function (file) {
                 // Don't include source maps
                 if (file.path.match(/\.(map)$/)) {
                     return false;
@@ -129,7 +95,7 @@ module.exports = {
                 return true;
             },
             // Custom mapping of manifest item goes here
-            map: function(file) {
+            map: function (file) {
                 // Fix incorrect key for fonts
                 if (
                     file.isAsset &&
@@ -138,14 +104,37 @@ module.exports = {
                 ) {
                     const pathParts = file.path.split('.');
                     const nameParts = file.name.split('.');
-    
+
                     // Compare extensions
                     if (pathParts[pathParts.length - 1] !== nameParts[nameParts.length - 1]) {
                         file.name = pathParts[0].concat('.', pathParts[pathParts.length - 1]);
                     }
                 }
+                
                 return file;
             },
-        })
-    ]
+        }),
+
+        /**
+         * Enable build OS notifications (when using watch command)
+         */
+        new WebpackNotifierPlugin({alwaysNotify: true, skipFirstNotification: true}),
+
+        /**
+         * Minimize CSS assets
+         */
+        ifProduction(new CssMinimizerWebpackPlugin({
+            minimizerOptions: {
+                preset: [
+                    "default",
+                    {
+                        discardComments: { removeAll: true },
+                    },
+                ],
+            },
+        }))
+
+    ]).filter(Boolean),
+    devtool: 'source-map',
+    stats: { children: false }
 };

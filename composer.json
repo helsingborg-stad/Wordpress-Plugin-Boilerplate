@@ -3,18 +3,25 @@
     "description": "{{BPREPLACEDESCRIPTION}}",
     "type": "wordpress-plugin",
     "license": "MIT",
+    "scripts": {
+        "test": "./vendor/bin/phpunit --testdox",
+        "coverage": "XDEBUG_MODE=coverage ./vendor/bin/phpunit --testdox",
+        "minimal": "./vendor/bin/phpunit"
+    },
     "authors": [
         {
             "name": "{{BPREPLACEAUTHOR}}",
             "email": "{{BPREPLACEAUTHOREMAIL}}"
         }
     ],
+    "autoload": {
+        "psr-4": {"{{BPREPLACENAMESPACE}}\\": "source/php/"}
+    },
     "minimum-stability": "stable",
     "require": {},
-    "repositories": [
-        {
-            "type": "vcs",
-            "url": "https://github.com/{{BPREPLACEGITHUB}}/{{BPREPLACESLUG}}.git"
-        }
-    ]
+    "require-dev": {
+        "brain/monkey": "^2.6",
+        "codedungeon/phpunit-result-printer": "^0.31.0",
+        "phpunit/phpunit": "^9.5"
+    }
 }
