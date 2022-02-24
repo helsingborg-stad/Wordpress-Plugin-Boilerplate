@@ -1,0 +1,32 @@
+
+# Workflow for running smoke tests for pull requests etc.
+
+name: Pre merge tests
+
+on:
+  pull_request:
+  workflow_dispatch:
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v2
+
+    - uses: actions/setup-node@v2
+      with:
+        node-version: '16'
+
+    - name: Setup PHP with composer v2
+      uses: shivammathur/setup-php@v2
+      with:
+        php-version: '7.4'
+        tools: composer:v2
+
+    - name: Install composer dependencies.
+      run: composer install
+
+    - name: Run unit tests
+      run: composer test
