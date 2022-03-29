@@ -34,6 +34,7 @@ $loader->addPrefix('{{BPREPLACENAMESPACE}}', {{BPREPLACECAPSCONSTANT}}_PATH . 's
 $loader->register();
 
 // Acf auto import and export
+add_action('acf/init', function () {
 $acfExportManager = new \AcfExportManager\AcfExportManager();
 $acfExportManager->setTextdomain('{{BPREPLACESLUG}}');
 $acfExportManager->setExportFolder({{BPREPLACECAPSCONSTANT}}_PATH . 'source/php/AcfFields/');
@@ -41,6 +42,7 @@ $acfExportManager->autoExport(array(
     '{{BPREPLACESLUG}}-settings' => 'group_61ea7a87e8aaa' //Update with acf id here, settings view
 ));
 $acfExportManager->import();
+}
 
 // Start application
 new {{BPREPLACENAMESPACE}}\App();
