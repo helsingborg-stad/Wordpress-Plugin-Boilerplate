@@ -9,7 +9,7 @@
  * Author URI:        https://github.com/{{BPREPLACEGITHUB}}
  * License:           MIT
  * License URI:       https://opensource.org/licenses/MIT
- * Text Domain:       mod-{{BPREPLACESLUG}}
+ * Text Domain:       {{BPREPLACESLUG}}
  * Domain Path:       /languages
  */
 
@@ -21,8 +21,9 @@ if (! defined('WPINC')) {
 define('{{BPREPLACECAPSCONSTANT}}_PATH', plugin_dir_path(__FILE__));
 define('{{BPREPLACECAPSCONSTANT}}_URL', plugins_url('', __FILE__));
 define('{{BPREPLACECAPSCONSTANT}}_TEMPLATE_PATH', {{BPREPLACECAPSCONSTANT}}_PATH . 'templates/');
+define('{{BPREPLACECAPSCONSTANT}}_TEXT_DOMAIN', {{BPREPLACESLUG}});
 
-load_plugin_textdomain('{{BPREPLACESLUG}}', false, plugin_basename(dirname(__FILE__)) . '/languages');
+load_plugin_textdomain({{BPREPLACECAPSCONSTANT}}_TEXT_DOMAIN, false, {{BPREPLACECAPSCONSTANT}}_PATH . '/languages');
 
 require_once {{BPREPLACECAPSCONSTANT}}_PATH . 'source/php/Vendor/Psr4ClassLoader.php';
 require_once {{BPREPLACECAPSCONSTANT}}_PATH . 'Public.php';
@@ -35,13 +36,13 @@ $loader->register();
 
 // Acf auto import and export
 add_action('acf/init', function () {
-$acfExportManager = new \AcfExportManager\AcfExportManager();
-$acfExportManager->setTextdomain('{{BPREPLACESLUG}}');
-$acfExportManager->setExportFolder({{BPREPLACECAPSCONSTANT}}_PATH . 'source/php/AcfFields/');
-$acfExportManager->autoExport(array(
-    '{{BPREPLACESLUG}}-settings' => 'group_61ea7a87e8aaa' //Update with acf id here, settings view
-));
-$acfExportManager->import();
+    $acfExportManager = new \AcfExportManager\AcfExportManager();
+    $acfExportManager->setTextdomain('{{BPREPLACESLUG}}');
+    $acfExportManager->setExportFolder({{BPREPLACECAPSCONSTANT}}_PATH . 'source/php/AcfFields/');
+    $acfExportManager->autoExport(array(
+        '{{BPREPLACESLUG}}-settings' => 'group_61ea7a87e8aaa' //Update with acf id here, settings view
+    ));
+    $acfExportManager->import();
 }
 
 // Start application
