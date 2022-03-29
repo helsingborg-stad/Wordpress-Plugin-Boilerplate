@@ -21,7 +21,7 @@ if (! defined('WPINC')) {
 define('{{BPREPLACECAPSCONSTANT}}_PATH', plugin_dir_path(__FILE__));
 define('{{BPREPLACECAPSCONSTANT}}_URL', plugins_url('', __FILE__));
 define('{{BPREPLACECAPSCONSTANT}}_TEMPLATE_PATH', {{BPREPLACECAPSCONSTANT}}_PATH . 'templates/');
-define('{{BPREPLACECAPSCONSTANT}}_TEXT_DOMAIN', {{BPREPLACESLUG}});
+define('{{BPREPLACECAPSCONSTANT}}_TEXT_DOMAIN', '{{BPREPLACESLUG}}');
 
 load_plugin_textdomain({{BPREPLACECAPSCONSTANT}}_TEXT_DOMAIN, false, {{BPREPLACECAPSCONSTANT}}_PATH . '/languages');
 
@@ -43,7 +43,7 @@ add_action('acf/init', function () {
         '{{BPREPLACESLUG}}-settings' => 'group_61ea7a87e8aaa' //Update with acf id here, settings view
     ));
     $acfExportManager->import();
-}
+});
 
 // Start application
 new {{BPREPLACENAMESPACE}}\App();
