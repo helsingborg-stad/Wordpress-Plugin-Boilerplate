@@ -7,16 +7,21 @@ class CacheBust
     /**
      * Returns the revved/cache-busted file name of an asset.
      * @param string $name Asset name (array key) from rev-mainfest.json
-     * @param boolean $returnName Returns $name if set to true while in dev mode
      * @return string filename of the asset (including directory above)
      */
-    public static function name($name, $returnName = true)
+    public function name($name)
     {
-        if ($returnName == true && defined('DEV_MODE') && DEV_MODE == true) {
-            return $name;
-        }
+        $jsonPath = {{BPREPLACECAPSCONSTANT}}_PATH . apply_filters(
+            '{{BPREPLACENAMESPACE}}/Helper/CacheBust/RevManifestPath',
+            'dist/manifest.json'
+        );
 
-        $revManifest = self::getRevManifest();
+        $revManifest = [];
+        if (file_exists($jsonPath)) {
+            $revManifest = json_decode(file_get_contents($jsonPath), true);
+        } elseif ($this->isDebug()) {
+            echo '<div style="color:red">Error: Assets not built. Go to ' . {{BPREPLACECAPSCONSTANT}}_PATH . ' and run gulp. See ' . {{BPREPLACECAPSCONSTANT}}_PATH . 'README.md for more info.</div>';
+        }
 
         if (!isset($revManifest[$name])) {
             return;
@@ -26,17 +31,10 @@ class CacheBust
     }
 
     /**
-     * Decode assets json to array
-     * @return array containg assets filenames
+     * Check if debug mode, Remove constant dependency in tests.
      */
-    public static function getRevManifest()
+    public function isDebug()
     {
-        $jsonPath = {{BPREPLACECAPSCONSTANT}}_PATH . apply_filters('{{BPREPLACENAMESPACE}}/Helper/CacheBust/RevManifestPath', 'dist/rev-manifest.json');
-
-        if (file_exists($jsonPath)) {
-            return json_decode(file_get_contents($jsonPath), true);
-        } elseif (WP_DEBUG) {
-            echo '<div style="color:red">Error: Assets not built. Go to ' . {{BPREPLACECAPSCONSTANT}}_PATH . ' and run gulp. See '. {{BPREPLACECAPSCONSTANT}}_PATH . 'README.md for more info.</div>';
-        }
+        return defined('WP_DEBUG') && WP_DEBUG;
     }
 }

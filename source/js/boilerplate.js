@@ -1,1 +1,1 @@
-var (#plugin_namespace#) = {};
+console.log('{{BPREPLACENAME}}'); 

@@ -25,14 +25,10 @@ define('{{BPREPLACECAPSCONSTANT}}_TEXT_DOMAIN', '{{BPREPLACESLUG}}');
 
 load_plugin_textdomain({{BPREPLACECAPSCONSTANT}}_TEXT_DOMAIN, false, {{BPREPLACECAPSCONSTANT}}_PATH . '/languages');
 
-require_once {{BPREPLACECAPSCONSTANT}}_PATH . 'source/php/Vendor/Psr4ClassLoader.php';
 require_once {{BPREPLACECAPSCONSTANT}}_PATH . 'Public.php';
 
-// Instantiate and register the autoloader
-$loader = new {{BPREPLACENAMESPACE}}\Vendor\Psr4ClassLoader();
-$loader->addPrefix('{{BPREPLACENAMESPACE}}', {{BPREPLACECAPSCONSTANT}}_PATH);
-$loader->addPrefix('{{BPREPLACENAMESPACE}}', {{BPREPLACECAPSCONSTANT}}_PATH . 'source/php/');
-$loader->register();
+// Register the autoloader
+require __DIR__ . '/vendor/autoload.php';
 
 // Acf auto import and export
 add_action('acf/init', function () {
