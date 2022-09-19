@@ -31,15 +31,14 @@
 class Setup
 {
     private static $config;
-    private static $folders = ['source'];
-    private static $searchableFileTypes = ['php', 'scss', 'js'];
+    private static $folders = ['source', 'languages'];
+    private static $searchableFileTypes = ['php', 'scss', 'js', 'po', 'mo'];
 
     public function __construct()
     {
         self::info("Starting setup");
 
         if (self::$config = self::getConfig()) {
-
             //Traverse directories and make replacements
             $filesToReplace = self::getFilesList();
             if (is_array($filesToReplace) && !empty($filesToReplace)) {
@@ -79,6 +78,14 @@ class Setup
             self::moveFile(
                 self::getBasePath() . 'source/sass/boilerplate.scss',
                 self::getBasePath() . 'source/sass/' . self::$config->slug . '.scss'
+            );
+            self::moveFile(
+                self::getBasePath() . 'languages/boilerplate-sv_SE.mo',
+                self::getBasePath() . 'languages/' . self::$config->slug . '-sv_SE.mo'
+            );
+            self::moveFile(
+                self::getBasePath() . 'languages/boilerplate-sv_SE.po',
+                self::getBasePath() . 'languages/' . self::$config->slug . '-sv_SE.po'
             );
 
             //Remove me
@@ -180,7 +187,6 @@ class Setup
      */
     private static function makeReplacements($from, $to, $filename)
     {
-
         if (!file_exists($filename)) {
             return false;
         }
