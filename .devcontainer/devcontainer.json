@@ -22,7 +22,10 @@
 	},
 	"customizations": {
 		"vscode": {
-			"extensions": ["xdebug.php-debug"],
+			"extensions": [
+				"xdebug.php-debug",
+				"ms-azuretools.vscode-docker"
+			],
 			"settings": {
 				"intelephense.environment.includePaths": [
 					"/var/www/html"
@@ -30,7 +33,10 @@
 			}
 		},
 		"codespaces": {
-			"extensions": ["xdebug.php-debug"],
+			"extensions": [
+				"xdebug.php-debug",
+				"ms-azuretools.vscode-docker"
+			],
 			"settings": {
 				"intelephense.environment.includePaths": [
 					"/var/www/html"
@@ -39,6 +45,10 @@
 		}
 	},
 	"features": {
+		"ghcr.io/rocker-org/devcontainer-features/apt-packages:1": {
+			"packages": "curl,nano,bash-completion",
+			"upgradePackages": true
+		},
 		"ghcr.io/devcontainers/features/node:1": {
 			"nodeGypDependencies": true,
 			"version": "16"

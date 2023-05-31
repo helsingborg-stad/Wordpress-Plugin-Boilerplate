@@ -1,6 +1,12 @@
-FROM wordpress:6.2
+# WordPress version can be any of the listed tags from https://hub.docker.com/_/wordpress/tags
+# E.g. latest, 6.2, ...
+ARG WORDPRESS_VERSION=latest
 
-FROM mcr.microsoft.com/vscode/devcontainers/php:8.2-bullseye
+# PHP Variant can be any of the listed tags from https://mcr.microsoft.com/v2/devcontainers/php/tags/list
+ARG PHP_VARIANT=8.2-bullseye
+
+FROM wordpress:${WORDPRESS_VERSION}
+FROM mcr.microsoft.com/vscode/devcontainers/php:${PHP_VARIANT}
 
 # Copy WordPress files from wordpress container.
 COPY --from=0 /usr/src/wordpress/ /var/www/html/
@@ -9,8 +15,8 @@ COPY --from=0 /usr/src/wordpress/ /var/www/html/
 RUN chown -R vscode:vscode /var/www/html
 
 # Install packages
-RUN apt-get update && export DEBIAN_FRONTEND=noninteractive \
-    && apt-get -y install --no-install-recommends curl nano bash-completion 
+# RUN apt-get update && export DEBIAN_FRONTEND=noninteractive \
+#     && apt-get -y install --no-install-recommends curl nano bash-completion 
 
 # Install php-mysql driver
 RUN docker-php-ext-install mysqli pdo pdo_mysql
