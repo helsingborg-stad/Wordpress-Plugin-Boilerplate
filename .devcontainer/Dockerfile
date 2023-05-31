@@ -14,10 +14,6 @@ COPY --from=0 /usr/src/wordpress/ /var/www/html/
 # Make vscode owner of all WordPress files.
 RUN chown -R vscode:vscode /var/www/html
 
-# Install packages
-# RUN apt-get update && export DEBIAN_FRONTEND=noninteractive \
-#     && apt-get -y install --no-install-recommends curl nano bash-completion 
-
 # Install php-mysql driver
 RUN docker-php-ext-install mysqli pdo pdo_mysql
 
