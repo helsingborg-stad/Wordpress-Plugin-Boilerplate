@@ -55,3 +55,10 @@ dist/.temp
 !.gitignore
 !.editorconfig
 !.github
+
+# include .devcontainer files
+!.devcontainer
+.devcontainer/wp-config-local.php
+
+# include .vscode files
+!.vscode

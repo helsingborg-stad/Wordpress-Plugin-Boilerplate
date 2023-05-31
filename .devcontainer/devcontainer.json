@@ -1,0 +1,55 @@
+// For format details, see https://aka.ms/devcontainer.json. For config options, see the
+// README at: https://github.com/devcontainers/templates/tree/main/src/php-mariadb
+{
+	"name": "PHP & MySQL",
+	"dockerComposeFile": "docker-compose.yml",
+	"service": "app",
+	"workspaceFolder": "/workspaces/${localWorkspaceFolderBasename}",
+	"forwardPorts": [
+		80,
+		3306
+	],
+	"portsAttributes": {
+		"80": {
+			"label": "WordPress"
+		},
+		"3306": {
+			"label": "Database"
+		}
+	},
+	"remoteEnv": {
+		"XDEBUG_MODE": "off"
+	},
+	"customizations": {
+		"vscode": {
+			"extensions": ["xdebug.php-debug"],
+			"settings": {
+				"intelephense.environment.includePaths": [
+					"/var/www/html"
+				]
+			}
+		},
+		"codespaces": {
+			"extensions": ["xdebug.php-debug"],
+			"settings": {
+				"intelephense.environment.includePaths": [
+					"/var/www/html"
+				]
+			}
+		}
+	},
+	"features": {
+		"ghcr.io/devcontainers/features/node:1": {
+			"nodeGypDependencies": true,
+			"version": "16"
+		}
+	},
+	"postCreateCommand": {
+		"symlink-plugin": "ln -s \"$(pwd)\" \"/var/www/html/wp-content/plugins/$(basename \"$PWD\")\"",
+		"symlink-wp-config-local": "ln -s \"$(pwd)/.devcontainer/wp-config-local.php\" /var/www/html/wp-config-local.php",
+		"symlink-wp-config": "ln -s \"$(pwd)/.devcontainer/wp-config.php\" /var/www/html/wp-config.php",
+		"start-apache": "service apache2 start"
+	},
+	"waitFor": "postCreateCommand",
+	"remoteUser": "vscode"
+}
