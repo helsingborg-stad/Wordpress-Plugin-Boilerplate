@@ -81,6 +81,10 @@ _For more examples, please refer to the [Documentation](https://example.com)_
 
 Instructions for deploys.
 
+## Devcontainer
+
+To start the devcontainer, open the repo in an IDE that [supports running devcontainers](https://containers.dev/supporting).
+
 ## Roadmap
 
 See the [open issues][issues-url] for a list of proposed features (and known issues).
