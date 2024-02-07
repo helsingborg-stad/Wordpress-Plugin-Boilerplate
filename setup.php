@@ -49,6 +49,16 @@ class Setup
                 self::err("No files found to replace");
             }
 
+            self::createFileFromTemplate(
+                self::getBasePath() . 'package.template.json',
+                self::getBasePath() . 'package.json'
+            );
+            
+            self::createFileFromTemplate(
+                self::getBasePath() . 'composer.template.json',
+                self::getBasePath() . 'composer.json'
+            );
+
             //Manually replacement targets
             self::updateFile(self::getBasePath() . 'package.json');
             self::updateFile(self::getBasePath() . 'composer.json');
@@ -160,6 +170,15 @@ class Setup
         if ($result) {
             self::log("Updated " . $filename);
         }
+    }
+    
+    private static function createFileFromTemplate(string $template, string $destination):void
+    {
+        if (!copy($template, $destination)) {
+            self::err("Failed to create " . $destination);
+        }
+
+        self::removeFile($template);
     }
 
     /**
