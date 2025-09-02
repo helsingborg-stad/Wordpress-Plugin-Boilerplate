@@ -16,7 +16,7 @@ module.exports = {
      * Add your entry files here
      */
     entry: {
-        'js/{{BPREPLACESLUG}}': './source/js/{{BPREPLACESLUG}}.js',
+        'js/{{BPREPLACESLUG}}': './source/js/{{BPREPLACESLUG}}.ts',
         'css/{{BPREPLACESLUG}}': './source/sass/{{BPREPLACESLUG}}.scss',
     },
 
