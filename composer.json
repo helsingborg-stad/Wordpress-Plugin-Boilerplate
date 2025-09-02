@@ -4,9 +4,12 @@
     "type": "wordpress-plugin",
     "license": "MIT",
     "scripts": {
-        "test": "./vendor/bin/phpunit --testdox",
-        "coverage": "XDEBUG_MODE=coverage ./vendor/bin/phpunit --testdox",
-        "minimal": "./vendor/bin/phpunit"
+        "test": "phpunit --no-coverage --testdox",
+        "test:coverage": "XDEBUG_MODE=coverage phpunit --testdox",
+        "lint": "vendor/bin/phpcs",
+        "lint:changed": "vendor/bin/phpcs-changed origin/main",
+        "fix": "vendor/bin/phpcbf",
+        "fix:changed": "vendor/bin/phpcbf-changed origin/main"
     },
     "authors": [
         {
@@ -15,13 +18,24 @@
         }
     ],
     "autoload": {
-        "psr-4": {"{{BPREPLACENAMESPACE}}\\": "source/php/"}
+        "psr-4": {
+            "{{BPREPLACENAMESPACE}}\\": "source/php/"
+        }
     },
     "minimum-stability": "stable",
-    "require": {},
+    "require": {
+        "helsingborg-stad/wpservice": "^2.0",
+        "helsingborg-stad/acfservice": "^1.0"
+    },
     "require-dev": {
         "brain/monkey": "^2.6",
         "codedungeon/phpunit-result-printer": "^0.31.0",
-        "phpunit/phpunit": "^9.5"
+        "phpunit/phpunit": "^11.5",
+        "helsingborg-stad/phpcs": "^0.2.2"
+    },
+    "config": {
+        "allow-plugins": {
+            "dealerdirect/phpcodesniffer-composer-installer": true
+        }
     }
 }
