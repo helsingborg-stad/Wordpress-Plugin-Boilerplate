@@ -1,11 +1,10 @@
 {
     "compilerOptions": {
-        "target": "ES2021",
-        "module": "es6",
-        "moduleResolution": "node",
+        "target": "es6",
+        "module": "esnext",
+        "moduleResolution": "bundler",
         "isolatedModules": true,
         "forceConsistentCasingInFileNames": true,
-        "outDir": "assets/dist/js",
         "skipLibCheck": true,
         "allowJs": true,
         "resolveJsonModule": true,
