@@ -1,0 +1,17 @@
+{
+    "compilerOptions": {
+        "target": "ES2021",
+        "module": "es6",
+        "moduleResolution": "node",
+        "isolatedModules": true,
+        "forceConsistentCasingInFileNames": true,
+        "outDir": "assets/dist/js",
+        "skipLibCheck": true,
+        "allowJs": true,
+        "resolveJsonModule": true,
+        "strict": true,
+        "sourceMap": true
+    },
+    "exclude": [],
+    "include": ["./source/js/**/*.ts"]
+}

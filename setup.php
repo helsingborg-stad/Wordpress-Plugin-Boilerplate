@@ -32,7 +32,7 @@ class Setup
 {
     private static $config;
     private static $folders = ['source', 'languages'];
-    private static $searchableFileTypes = ['php', 'scss', 'js', 'po', 'mo'];
+    private static $searchableFileTypes = ['php', 'scss', 'js', 'po', 'mo', 'ts'];
 
     public function __construct()
     {
@@ -72,8 +72,12 @@ class Setup
 
             //Rename asset source files
             self::moveFile(
-                self::getBasePath() . 'source/js/boilerplate.js',
-                self::getBasePath() . 'source/js/' . self::$config->slug . '.js'
+                self::getBasePath() . 'source/js/boilerplate.ts',
+                self::getBasePath() . 'source/js/' . self::$config->slug . '.ts'
+            );
+            self::moveFile(
+                self::getBasePath() . 'source/js/boilerplate.test.ts',
+                self::getBasePath() . 'source/js/' . self::$config->slug . '.test.ts'
             );
             self::moveFile(
                 self::getBasePath() . 'source/sass/boilerplate.scss',
