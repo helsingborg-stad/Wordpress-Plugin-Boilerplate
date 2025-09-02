@@ -13,6 +13,8 @@ use WpService\Contracts\WpRegisterStyle;
 
 class App
 {
+    private $cacheBust = null;
+
     public function __construct(private AddFilter&AddAction&WpRegisterStyle&WpEnqueueStyle&WpRegisterScript&WpEnqueueScript $wpService)
     {
         $this->wpService->AddAction('admin_enqueue_scripts', array($this, 'enqueueStyles'));
