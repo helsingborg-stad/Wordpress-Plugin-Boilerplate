@@ -52,7 +52,7 @@ class Setup
             //Manually replacement targets
             self::updateFile(self::getBasePath() . 'package.json');
             self::updateFile(self::getBasePath() . 'composer.json');
-            self::updateFile(self::getBasePath() . 'webpack.config.js');
+            self::updateFile(self::getBasePath() . 'vite.config.mjs');
             self::updateFile(self::getBasePath() . 'README-boilerplate.md');
             self::updateFile(self::getBasePath() . 'boilerplate.php');
             self::updateFile(self::getBasePath() . 'Public.php');

@@ -1,16 +1,15 @@
 {
     "compilerOptions": {
-        "target": "es6",
-        "module": "esnext",
-        "moduleResolution": "bundler",
-        "isolatedModules": true,
-        "forceConsistentCasingInFileNames": true,
-        "skipLibCheck": true,
         "allowJs": true,
-        "resolveJsonModule": true,
+        "checkJs": false,
+        "target": "es6",
+        "module": "commonjs",
+        "useDefineForClassFields": true,
+        "esModuleInterop": true,
+        "forceConsistentCasingInFileNames": true,
         "strict": true,
-        "sourceMap": true
+        "skipLibCheck": true,
+        "lib": ["ES2021", "DOM", "DOM.Iterable"]
     },
-    "exclude": [],
-    "include": ["./source/js/**/*.ts"]
+    "include": ["source/js/**/*", "global.d.ts"]
 }
