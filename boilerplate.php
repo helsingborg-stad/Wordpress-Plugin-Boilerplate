@@ -13,6 +13,9 @@
  * Domain Path:       /languages
  */
 
+use AcfService\Implementations\NativeAcfService;
+use WpService\Implementations\NativeWpService;
+
  // Protect agains direct file access
 if (! defined('WPINC')) {
     die;
@@ -42,4 +45,4 @@ add_action('acf/init', function () {
 });
 
 // Start application
-new {{BPREPLACENAMESPACE}}\App();
+new {{BPREPLACENAMESPACE}}\App(new NativeWpService(), new NativeAcfService());

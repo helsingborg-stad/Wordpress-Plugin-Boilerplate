@@ -10,12 +10,15 @@ use WpService\Contracts\WpEnqueueScript;
 use WpService\Contracts\WpEnqueueStyle;
 use WpService\Contracts\WpRegisterScript;
 use WpService\Contracts\WpRegisterStyle;
+use AcfService\AcfService;
 
 class App
 {
     private $cacheBust = null;
 
-    public function __construct(private AddFilter&AddAction&WpRegisterStyle&WpEnqueueStyle&WpRegisterScript&WpEnqueueScript $wpService)
+    public function __construct(
+        private AddFilter&AddAction&WpRegisterStyle&WpEnqueueStyle&WpRegisterScript&WpEnqueueScript $wpService,
+        private AcfService $acfService)
     {
         $this->wpService->AddAction('admin_enqueue_scripts', array($this, 'enqueueStyles'));
         $this->wpService->AddAction('admin_enqueue_scripts', array($this, 'enqueueScripts'));
