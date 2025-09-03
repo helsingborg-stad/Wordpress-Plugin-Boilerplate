@@ -65,6 +65,14 @@
             "node_modules/(?!(.*\\.mjs$))"
         ]
     },
+    "prettier": {
+        "trailingComma": "es5",
+        "semi": false,
+        "singleQuote": true,
+        "arrowParens": "avoid",
+        "endOfLine": "lf",
+        "tabWidth": 4
+    },
     "dependencies": {
         "vite-config-factory": "^1.0.1"
     }
