@@ -14,7 +14,7 @@
     },
     "homepage": "https://github.com/{{BPREPLACEGITHUB}}/{{BPREPLACESLUG}}",
     "scripts": {
-        "test": "jest --coverage --maxWorkers=$(node -e \"console.log(Math.max(1, Math.floor(require('os').cpus().length / 2)))\")",
+        "test": "jest --coverage --maxWorkers=50%",
         "dev": "vite",
         "build": "vite build",
         "build:dev": "vite build --mode development",
@@ -69,8 +69,6 @@
         "trailingComma": "es5",
         "semi": false,
         "singleQuote": true,
-        "arrowParens": "avoid",
-        "endOfLine": "lf",
         "tabWidth": 4
     },
     "dependencies": {
