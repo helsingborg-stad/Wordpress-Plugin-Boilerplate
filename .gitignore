@@ -33,6 +33,9 @@ Thumbs.db
 *.o
 *.so
 
+# Ignore test files
+/coverage
+
 # ignore packaged files
 *.7z
 *.dmg
@@ -44,8 +47,7 @@ Thumbs.db
 *.zip
 
 # ignore dist temp folder
-dist/temp
-dist/.temp
+/dist
 
 # -------------------------
 # BEGIN Whitelisted Files
@@ -55,3 +57,4 @@ dist/.temp
 !.gitignore
 !.editorconfig
 !.github
+!.vscode

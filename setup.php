@@ -32,7 +32,7 @@ class Setup
 {
     private static $config;
     private static $folders = ['source', 'languages'];
-    private static $searchableFileTypes = ['php', 'scss', 'js', 'po', 'mo'];
+    private static $searchableFileTypes = ['php', 'scss', 'js', 'po', 'mo', 'ts'];
 
     public function __construct()
     {
@@ -52,7 +52,7 @@ class Setup
             //Manually replacement targets
             self::updateFile(self::getBasePath() . 'package.json');
             self::updateFile(self::getBasePath() . 'composer.json');
-            self::updateFile(self::getBasePath() . 'webpack.config.js');
+            self::updateFile(self::getBasePath() . 'vite.config.mjs');
             self::updateFile(self::getBasePath() . 'README-boilerplate.md');
             self::updateFile(self::getBasePath() . 'boilerplate.php');
             self::updateFile(self::getBasePath() . 'Public.php');
@@ -72,8 +72,12 @@ class Setup
 
             //Rename asset source files
             self::moveFile(
-                self::getBasePath() . 'source/js/boilerplate.js',
-                self::getBasePath() . 'source/js/' . self::$config->slug . '.js'
+                self::getBasePath() . 'source/js/boilerplate.ts',
+                self::getBasePath() . 'source/js/' . self::$config->slug . '.ts'
+            );
+            self::moveFile(
+                self::getBasePath() . 'source/js/boilerplate.test.ts',
+                self::getBasePath() . 'source/js/' . self::$config->slug . '.test.ts'
             );
             self::moveFile(
                 self::getBasePath() . 'source/sass/boilerplate.scss',

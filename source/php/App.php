@@ -1,14 +1,27 @@
 <?php
 
+declare(strict_types=1);
+
 namespace {{BPREPLACENAMESPACE}};
+
+use WpService\Contracts\AddAction;
+use WpService\Contracts\AddFilter;
+use WpService\Contracts\WpEnqueueScript;
+use WpService\Contracts\WpEnqueueStyle;
+use WpService\Contracts\WpRegisterScript;
+use WpService\Contracts\WpRegisterStyle;
+use AcfService\AcfService;
 
 class App
 {
-    public function __construct()
-    {
-        add_action('admin_enqueue_scripts', array($this, 'enqueueStyles'));
-        add_action('admin_enqueue_scripts', array($this, 'enqueueScripts'));
+    private $cacheBust = null;
 
+    public function __construct(
+        private AddFilter&AddAction&WpRegisterStyle&WpEnqueueStyle&WpRegisterScript&WpEnqueueScript $wpService,
+        private AcfService $acfService)
+    {
+        $this->wpService->AddAction('admin_enqueue_scripts', array($this, 'enqueueStyles'));
+        $this->wpService->AddAction('admin_enqueue_scripts', array($this, 'enqueueScripts'));
         $this->cacheBust = new \{{BPREPLACENAMESPACE}}\Helper\CacheBust();
     }
 
@@ -18,13 +31,13 @@ class App
      */
     public function enqueueStyles()
     {
-        wp_register_style(
+        $this->wpService->WpRegisterStyle(
             '{{BPREPLACESLUG}}-css',
             {{BPREPLACECAPSCONSTANT}}_URL . '/dist/' .
             $this->cacheBust->name('css/{{BPREPLACESLUG}}.css')
         );
 
-        wp_enqueue_style('{{BPREPLACESLUG}}-css');
+        $this->wpService->WpEnqueueStyle('{{BPREPLACESLUG}}-css');
     }
 
     /**
@@ -33,12 +46,12 @@ class App
      */
     public function enqueueScripts()
     {
-        wp_register_script(
+        $this->wpService->WpRegisterScript(
             '{{BPREPLACESLUG}}-js',
             {{BPREPLACECAPSCONSTANT}}_URL . '/dist/' .
             $this->cacheBust->name('js/{{BPREPLACESLUG}}.js')
         );
 
-        wp_enqueue_script('{{BPREPLACESLUG}}-js');
+        $this->wpService->WpEnqueueScript('{{BPREPLACESLUG}}-js');
     }
 }
