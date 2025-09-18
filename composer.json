@@ -6,10 +6,8 @@
     "scripts": {
         "test": "phpunit --no-coverage --testdox",
         "test:coverage": "XDEBUG_MODE=coverage phpunit --testdox",
-        "lint": "vendor/bin/phpcs",
-        "lint:changed": "vendor/bin/phpcs-changed origin/main",
-        "fix": "vendor/bin/phpcbf",
-        "fix:changed": "vendor/bin/phpcbf-changed origin/main"
+        "lint": "vendor/carthage-software/mago/composer/bin/mago lint",
+        "format": "vendor/carthage-software/mago/composer/bin/mago fmt"
     },
     "authors": [
         {
@@ -28,14 +26,12 @@
         "helsingborg-stad/acfservice": "^1.0"
     },
     "require-dev": {
-        "brain/monkey": "^2.6",
-        "codedungeon/phpunit-result-printer": "^0.31.0",
         "phpunit/phpunit": "^11.5",
-        "helsingborg-stad/phpcs": "^0.2.2"
+        "carthage-software/mago": "^0.26.1"
     },
     "config": {
         "allow-plugins": {
-            "dealerdirect/phpcodesniffer-composer-installer": true
+            "carthage-software/mago": true
         }
     }
 }
