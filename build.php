@@ -1,5 +1,6 @@
 #!/bin/php
 <?php
+
 // Only allow run from cli.
 if (php_sapi_name() !== 'cli') {
     exit(0);
@@ -11,7 +12,7 @@ $buildCommands = [
     'npx browserslist@latest --update-db',
     'npm run build',
     'composer install --prefer-dist --no-progress --no-dev',
-    'composer dump-autoload --no-dev --classmap-authoritative'
+    'composer dump-autoload --no-dev --classmap-authoritative',
 ];
 
 // Files and directories not suitable for prod to be removed.
@@ -19,16 +20,20 @@ $removables = [
     '.git',
     '.gitignore',
     '.github',
+    '.vscode',
+    'biome.json',
     'build.php',
     'composer.json',
     'composer.lock',
-    'webpack.config.js',
+    'mago.toml',
     'node_modules',
     'package-lock.json',
     'package.json',
     'patchwork.json',
     'phpunit.xml',
-    'source/tests'
+    'source/tests',
+    'tsconfig.json',
+    'vite.config.mjs',
 ];
 
 $dirName = basename(dirname(__FILE__));
@@ -64,14 +69,14 @@ function executeCommand($command)
 {
     $proc = popen("$command 2>&1 ; echo Exit status : $?", 'r');
 
-    $liveOutput     = '';
+    $liveOutput = '';
     $completeOutput = '';
 
     while (!feof($proc)) {
-        $liveOutput     = fread($proc, 4096);
+        $liveOutput = fread($proc, 4096);
         $completeOutput = $completeOutput . $liveOutput;
         print $liveOutput;
-        @ flush();
+        @flush();
     }
 
     pclose($proc);
