@@ -6,8 +6,8 @@
     "scripts": {
         "test": "phpunit --no-coverage --testdox",
         "test:coverage": "XDEBUG_MODE=coverage phpunit --testdox",
-        "lint": "vendor/carthage-software/mago/composer/bin/mago lint",
-        "format": "vendor/carthage-software/mago/composer/bin/mago fmt"
+        "mago:lint": "vendor/carthage-software/mago/composer/bin/mago lint --fix --format",
+        "mago:format": "vendor/carthage-software/mago/composer/bin/mago fmt"
     },
     "authors": [
         {
