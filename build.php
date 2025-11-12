@@ -21,7 +21,6 @@ $removables = [
     '.gitignore',
     '.github',
     '.vscode',
-    'biome.json',
     'build.php',
     'composer.json',
     'composer.lock',
@@ -32,8 +31,11 @@ $removables = [
     'patchwork.json',
     'phpunit.xml',
     'source/tests',
-    'tsconfig.json',
+    'biome.json',
     'vite.config.mjs',
+    'tsconfig.json',
+    'mago.toml',
+    '.vscode',
 ];
 
 $dirName = basename(dirname(__FILE__));

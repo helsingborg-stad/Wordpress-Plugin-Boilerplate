@@ -6,7 +6,7 @@
     },
     "customLocalFormatters.formatters": [
         {
-            "command": "vendor/carthage-software/mago/composer/bin/mago format --stdin-input",
+            "command": "vendor/bin/mago format --stdin-input",
             "languages": ["php"]
         }
     ],
