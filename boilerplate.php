@@ -49,4 +49,4 @@ $wpService = new NativeWpService();
 $wpUtilService = new WpUtilService($wpService);
 
 // Start application
-new {{BPREPLACENAMESPACE}}\App(new NativeWpService(), new NativeAcfService(), $wpUtilService->enqueue(__DIR__));
+new {{BPREPLACENAMESPACE}}\App($wpService, $wpUtilService->enqueue(__DIR__));
