@@ -16,13 +16,13 @@ class App
         $wpService->AddAction(
             hookName: 'admin_enqueue_scripts',
             callback: function () {
-                $this->wpEnqueue->add('{{BPREPLACESLUG}}-css');
+                $this->wpEnqueue->add('css/{{BPREPLACESLUG}}.css');
             },
         );
         $wpService->AddAction(
             hookName: 'admin_enqueue_scripts',
             callback: function () {
-                $this->wpEnqueue->add('{{BPREPLACESLUG}}-js');
+                $this->wpEnqueue->add('js/{{BPREPLACESLUG}}.js');
             },
         );
     }
