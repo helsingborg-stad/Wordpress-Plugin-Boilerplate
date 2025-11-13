@@ -23,6 +23,8 @@
 			"config"
 		],
 		"/tsconfig.json": [],
-		"/vite.config.mjs": []
+		"/vite.config.mjs": [],
+		"/phpunit.xml": [],
+		"/bootstrap.php": []
 	}
 }
