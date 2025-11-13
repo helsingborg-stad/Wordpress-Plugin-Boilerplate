@@ -1,0 +1,28 @@
+{
+	"files": {
+		"/.vscode/extensions.json": [
+			"recommendations"
+		],
+		"/.vscode/settings.json": [
+			"editor.formatOnSave",
+			"editor.defaultFormatter",
+			"editor.codeActionsOnSave",
+			"customLocalFormatters.formatters",
+			"[php]"
+		],
+		"/mago.toml": [],
+		"/package.json": [
+			"scripts",
+			"devDependencies",
+			"jest",
+			"dependencies"
+		],
+		"/composer.json": [
+			"require-dev",
+			"scripts",
+			"config"
+		],
+		"/tsconfig.json": [],
+		"/vite.config.mjs": []
+	}
+}
