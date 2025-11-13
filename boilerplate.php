@@ -15,6 +15,7 @@
 
 use AcfService\Implementations\NativeAcfService;
 use WpService\Implementations\NativeWpService;
+use WpUtilService\WpUtilService;
 
  // Protect agains direct file access
 if (! defined('WPINC')) {
@@ -44,5 +45,8 @@ add_action('acf/init', function () {
     $acfExportManager->import();
 });
 
+$wpService = new NativeWpService();
+$wpUtilService = new WpUtilService($wpService);
+
 // Start application
-new {{BPREPLACENAMESPACE}}\App(new NativeWpService(), new NativeAcfService());
+new {{BPREPLACENAMESPACE}}\App(new NativeWpService(), new NativeAcfService(), $wpUtilService->enqueue(__DIR__));
