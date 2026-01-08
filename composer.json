@@ -25,11 +25,11 @@
     "require": {
         "helsingborg-stad/wpservice": "^2.0",
         "helsingborg-stad/acfservice": "^1.0",
-        "helsingborg-stad/wputilservice": "^0.2.44"
+        "helsingborg-stad/wputilservice": "^0.2.48"
     },
     "require-dev": {
         "phpunit/phpunit": "^11.5",
-        "carthage-software/mago": "^1.0.0-rc.1"
+        "carthage-software/mago": "^1.0.3"
     },
     "config": {
         "allow-plugins": {

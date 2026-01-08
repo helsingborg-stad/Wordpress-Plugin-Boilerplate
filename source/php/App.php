@@ -13,17 +13,6 @@ class App
         AddAction $wpService,
         private EnqueueManager $wpEnqueue,
     ) {
-        $wpService->AddAction(
-            hookName: 'admin_enqueue_scripts',
-            callback: function () {
-                $this->wpEnqueue->add('css/{{BPREPLACESLUG}}.css');
-            },
-        );
-        $wpService->AddAction(
-            hookName: 'admin_enqueue_scripts',
-            callback: function () {
-                $this->wpEnqueue->add('js/{{BPREPLACESLUG}}.js');
-            },
-        );
+        $wpEnqueue->on('admin_enqueue_scripts')->add('css/{{BPREPLACESLUG}}.css')->add('js/{{BPREPLACESLUG}}.js');
     }
 }
