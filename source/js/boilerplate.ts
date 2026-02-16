@@ -1,1 +1,1 @@
-console.log('{{BPREPLACENAME}}')
+console.log('{{BPREPLACENAME}}');

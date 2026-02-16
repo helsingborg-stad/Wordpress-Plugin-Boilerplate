@@ -1,5 +1,5 @@
 describe('<testcase>', () => {
-    it('<scenario>', () => {
-        expect(true).toBe(true)
-    })
-})
+	it('<scenario>', () => {
+		expect(true).toBe(true);
+	});
+});
