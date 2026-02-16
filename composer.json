@@ -24,7 +24,8 @@
     "minimum-stability": "stable",
     "require": {
         "helsingborg-stad/wputilservice": "^0.2.44",
-        "helsingborg-stad/wpservice": "^2.0"
+        "helsingborg-stad/wpservice": "^2.0",
+        "helsingborg-stad/acfservice": "^1.0"
     },
     "suggest": {
         "helsingborg-stad/municipio": "^6.0.0"
