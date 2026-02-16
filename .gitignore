@@ -3,6 +3,7 @@
 !/.gitignore
 
 # Allowed filetypes
+!/**/
 !**/*.css
 !**/*.html
 !**/*.js

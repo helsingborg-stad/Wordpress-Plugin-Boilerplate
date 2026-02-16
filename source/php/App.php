@@ -20,8 +20,8 @@ class App
         private AddFilter&AddAction&WpRegisterStyle&WpEnqueueStyle&WpRegisterScript&WpEnqueueScript $wpService,
         private AcfService $acfService)
     {
-        $this->wpService->AddAction('admin_enqueue_scripts', array($this, 'enqueueStyles'));
-        $this->wpService->AddAction('admin_enqueue_scripts', array($this, 'enqueueScripts'));
+        $this->wpService->AddAction('admin_enqueue_scripts', [$this, 'enqueueStyles']);
+        $this->wpService->AddAction('admin_enqueue_scripts', [$this, 'enqueueScripts']);
     }
 
     /**
